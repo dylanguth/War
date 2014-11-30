@@ -112,4 +112,23 @@ public class Card
       return false;
    
    }
+   
+   public static boolean greaterThan(Card otherCard)
+   {
+      if (rank >= otherCard.rank)
+         return true;
+      return false;
+   
+   }
+   
+   public static boolean lessThan(Card otherCard)
+   {
+      if (rank <= otherCard.rank)
+         return true;
+      return false;
+   
+   }
+
+
+   
 }
