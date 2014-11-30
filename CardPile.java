@@ -82,6 +82,13 @@ public class CardPile extends Deck
    
    }
    
+   public Card remove()
+   {
+      Card top = stack.pop();
+      return top; 
+      
+   }
+   
    public void shuffle()
    {
       //pop entire stack into arraylist
