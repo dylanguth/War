@@ -20,7 +20,7 @@ public class Card
    public static final int KING = 13;
    
    //declare variables
-   private static int rank, suit;
+   private final int rank, suit;
    private static String rankName, suitName;
    
    /**
@@ -29,22 +29,22 @@ public class Card
    @param suit The card's suit
    @param rank The card's rank
    */
-   public Card(int suit, int rank)
+   public Card(int s, int r)
    {
-      if (suit > 4 || suit < 1)
-         System.out.println(suit + " is not a valid suit assignment.");
-      if (rank > 13 || rank < 1)
-         System.out.println(rank + " is not a valid suit assignment.");
+      if (s > 4 || s < 1)
+         System.out.println(s + " is not a valid suit assignment.");
+      if (r > 13 || r < 1)
+         System.out.println(r + " is not a valid suit assignment.");
 
-      this.suit = suit;
-      this.rank = rank;
+      suit = s;
+      rank = r;
       
    }
    
    /**
    @return suit The card's suit
    */
-   public static int getSuit()
+   public int getSuit()
    {
       return suit;
    
@@ -53,7 +53,7 @@ public class Card
    /**
    @return rank The card's rank
    */
-   public static int getRank()
+   public int getRank()
    {
       return rank;
    
@@ -105,7 +105,7 @@ public class Card
    @param otherCard A second card
    @return boolean 
    */
-   public static boolean equals(Card otherCard)
+   public boolean equals(Card otherCard)
    {
       if (rank == otherCard.rank)
          return true;
@@ -113,7 +113,7 @@ public class Card
    
    }
    
-   public static boolean greaterThan(Card otherCard)
+   public boolean greaterThan(Card otherCard)
    {
       if (rank >= otherCard.rank)
          return true;
@@ -121,7 +121,7 @@ public class Card
    
    }
    
-   public static boolean lessThan(Card otherCard)
+   public boolean lessThan(Card otherCard)
    {
       if (rank <= otherCard.rank)
          return true;

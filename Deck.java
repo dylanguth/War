@@ -35,10 +35,12 @@ public class Deck
       deck = new Card[CARDS_IN_DECK];
       for (int r = Card.ACE; r<=Card.KING;r++)
       {
-         for (int s=Card.SPADES;s<=Card.CLUBS;s++)
+         for (int s=Card.SPADES;s<=Card.DIAMONDS;s++)
          {
-            deck[ct]=new Card(r,s);
-            ct = ct + 1;
+            deck[ct]=new Card(s,r); //for some reason, when this implements, it changes the suit and rank of 
+                                    //every card in the deck to the new card being created, but ct always goes up 
+                                    //and the new card is always created
+            ct++;
          }
       }
      
@@ -86,18 +88,18 @@ public class Deck
       return (cardsRemaining() == 0);
    }
 
-//    public static void main(String [] args) 
-//    {
-//       Deck deck = new Deck();
-//       deck.shuffle();
-//       int i = 0;
-//       while (!(deck.isEmpty()))
-//          System.out.println(i++ + " : " + deck.dealCard().toString());
-//       deck.freshDeck();
-//       System.out.println("************");
-//       i = 0;
-//       while (!(deck.isEmpty()))
-//          System.out.println(i++ + " : " + deck.dealCard().toString());
-// 
-//    }
+   public static void main(String [] args) 
+   {
+      Deck deck = new Deck();
+      deck.shuffle();
+      int i = 0;
+      while (!(deck.isEmpty()))
+         System.out.println(i++ + " : " + deck.dealCard().toString());
+      deck.freshDeck();
+      System.out.println("************");
+      i = 0;
+      while (!(deck.isEmpty()))
+         System.out.println(i++ + " : " + deck.dealCard().toString());
+
+   }
 }
