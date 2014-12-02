@@ -12,14 +12,59 @@ import java.awt.event.*;
 
 public class WarGame extends JFrame
 {
+   private JButton button;
+   private JLabel pic;
+   private ImageIcon front,back;
+   private String winner = "none";
+   
+   public WarGame()
+   {
+      super("Game of War");
+      setLayout(new FlowLayout());
+      button = new JButton("flip");
+      button.addActionListener(new ButtonListener());
+      add(button);
+      
+      front = new ImageIcon("aces.jpg");
+      back = new ImageIcon("back.jpg");
+      pic = new JLabel(back);     
+      add(pic);
+      
+   
+   
+   }
+   //class to handle button press
+   class ButtonListener implements ActionListener
+   {
+      public void actionPerformed(ActionEvent e)
+      {
+         if (pic.getIcon() == back)
+            pic.setIcon(front);
+         else
+            pic.setIcon(back);
+      
+      }
+   }
+   
+   public String getWinner()
+   {
+      return winner;
+   }
+   
    public static void main(String[] args)
    {
-      String winner = "none";
+      JFrame frame = new WarGame();
+      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      frame.pack();
+      frame.setVisible(true);
+      
       CardPile upPile1, upPile2, downPile1, downPile2, middle;
       Card curr1, curr2;
       
       //Create a frame
-      //add spots for the buttons and labels
+      //add spots for the buttons and labels and images of the backs and fronts of the cards
+      //labels: winner (of round and game), players, count, round
+      //buttons: New Game, Next, War, 
       
       //create deck
       Deck deck = new Deck();
@@ -29,7 +74,7 @@ public class WarGame extends JFrame
       
       //start deal
       //while theres still cards left, deal a card to each spot in the arraylist 
-      upPile1 = new CardPile(); //implements deck constructor before cardPile constructor
+      upPile1 = new CardPile(); //implements deck constructor before cardPile constructor. ct in deck is always 52, but count can change in pile
       upPile2 = new CardPile();
       downPile1 = new CardPile();
       downPile2 = new CardPile();
@@ -48,7 +93,7 @@ public class WarGame extends JFrame
       {
          j++;
          System.out.println("round" + j);
-         //peek/pop at top of each stack and display card
+         //pop at top of each stack and display card
          curr1 = upPile1.remove();
          curr2 = upPile2.remove();
    
@@ -68,12 +113,17 @@ public class WarGame extends JFrame
                {
                   winner = "player2";
                   //quit game and announce winner
-                  System.out.println("Player 2 wins!");
+                  System.out.println("this.get");
                   
                   System.exit(0);
                }
-               upPile1 = downPile1;
-               downPile1.removeAll();
+               
+               while (!downPile1.isEmpty())
+               {
+                  curr1 = downPile1.remove();
+                  upPile1.add(curr1);
+               
+               }
                upPile1.shuffle();
             }
             
@@ -88,8 +138,13 @@ public class WarGame extends JFrame
                   
                   System.exit(0);
                }
-               upPile2 = downPile2;
-               downPile2.removeAll();
+               
+               while (!downPile2.isEmpty())
+               {
+                  curr2 = downPile2.remove();
+                  upPile2.add(curr2);
+               
+               }
                upPile2.shuffle();
             }
             //end find winner
@@ -139,8 +194,16 @@ public class WarGame extends JFrame
                   
                System.exit(0);
             }
-            upPile1 = downPile1;
-            downPile1.removeAll(); //this changes the count of upPile1 to 0...not good. need to make it so it only removes all for downpile
+            
+            //while downPile has next push the popped cards from downpile into uppile
+            while (!downPile1.isEmpty())
+            {
+               curr1 = downPile1.remove();
+               upPile1.add(curr1);
+            
+            }
+            // upPile1 = downPile1;
+//             downPile1.removeAll(); //this changes the count of upPile1 to 0...not good. need to make it so it only removes all for downpile
             upPile1.shuffle();
          }
          
@@ -154,8 +217,13 @@ public class WarGame extends JFrame
                   
                System.exit(0);
             } 
-            upPile2 = downPile2;
-            downPile2.removeAll();
+            
+            while (!downPile2.isEmpty())
+            {
+               curr2 = downPile2.remove();
+               upPile2.add(curr2);
+            
+            }
             upPile2.shuffle();
          }
             //end find winner
