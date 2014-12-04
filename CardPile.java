@@ -81,6 +81,12 @@ public class CardPile extends Deck
    
    }
    
+   public int getCount()
+   {
+      return count;
+   
+   }
+   
    public void shuffle()
    {
       //pop entire stack into arraylist
