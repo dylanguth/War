@@ -15,7 +15,7 @@ public class WarGame extends JFrame
    //declare all variables and initialize
    private String winner = "none";
    private static CardPile upPile1, upPile2, downPile1, downPile2, middle = new CardPile();
-   private Card curr1 = new Card(0,0), curr2 = new Card(0,0);
+   private Card curr1 = new Card(0,0), curr2 = new Card(0,0), temp;
    private static Deck deck = new Deck();
    private int j = 0;
    
@@ -58,9 +58,9 @@ public class WarGame extends JFrame
             //add middle pile to downPile1
             while (!middle.isEmpty())
             {
-               curr1 = middle.remove();
-               downPile1.add(curr1);
-               System.out.println(curr1 + " transferred to downPile1");
+               temp = middle.remove();
+               downPile1.add(temp);
+               System.out.println(temp + " transferred to downPile1");
                
             }
    
@@ -75,9 +75,9 @@ public class WarGame extends JFrame
             //add middle pile to downPile2
             while (!middle.isEmpty())
             {
-               curr2 = middle.remove();
-               downPile2.add(curr2);
-               System.out.println(curr2 + " transferred to downPile2");
+               temp = middle.remove();
+               downPile2.add(temp);
+               System.out.println(temp + " transferred to downPile2");
                
             }
    
@@ -97,8 +97,8 @@ public class WarGame extends JFrame
             //while downPile has next push the popped cards from downpile into uppile
             while (!downPile1.isEmpty())
             {
-               curr1 = downPile1.remove();
-               upPile1.add(curr1);
+               temp = downPile1.remove();
+               upPile1.add(temp);
             
             }
             upPile1.shuffle();
@@ -116,8 +116,8 @@ public class WarGame extends JFrame
             
             while (!downPile2.isEmpty())
             {
-               curr2 = downPile2.remove();
-               upPile2.add(curr2);
+               temp = downPile2.remove();
+               upPile2.add(temp);
             
             }
             upPile2.shuffle();
@@ -197,8 +197,8 @@ public class WarGame extends JFrame
          
          while (!downPile1.isEmpty())
          {
-            curr1 = downPile1.remove();
-            upPile1.add(curr1);
+            temp = downPile1.remove();
+            upPile1.add(temp);
          
          }
          upPile1.shuffle();
@@ -216,8 +216,8 @@ public class WarGame extends JFrame
          
          while (!downPile2.isEmpty())
          {
-            curr2 = downPile2.remove();
-            upPile2.add(curr2);
+            temp = downPile2.remove();
+            upPile2.add(temp);
          
          }
          upPile2.shuffle();
@@ -244,9 +244,9 @@ public class WarGame extends JFrame
          System.out.println(curr1 + " and " + curr2 + " added to downPile1");
          while (!middle.isEmpty())
          {
-            curr1 = middle.remove();
-            downPile1.add(curr1);
-            System.out.println(curr1 + " transferred to downPile1");
+            temp = middle.remove();
+            downPile1.add(temp);
+            System.out.println(temp + " transferred to downPile1");
          }
       }
       else
@@ -257,9 +257,9 @@ public class WarGame extends JFrame
          System.out.println(curr1 + " and " + curr2 + " added to downPile2");
          while (!middle.isEmpty())
          {
-            curr2 = middle.remove();
-            downPile2.add(curr2);
-            System.out.println(curr2 + " transferred to downPile2");
+            temp = middle.remove();
+            downPile2.add(temp);
+            System.out.println(temp + " transferred to downPile2");
          }
 
       }
@@ -277,8 +277,8 @@ public class WarGame extends JFrame
          
          while (!downPile1.isEmpty())
          {
-            curr1 = downPile1.remove();
-            upPile1.add(curr1);
+            temp = downPile1.remove();
+            upPile1.add(temp);
          
          }
          upPile1.shuffle();
@@ -298,8 +298,8 @@ public class WarGame extends JFrame
          
          while (!downPile2.isEmpty())
          {
-            curr2 = downPile2.remove();
-            upPile2.add(curr2);
+            temp = downPile2.remove();
+            upPile2.add(temp);
          
          }
          upPile2.shuffle();
