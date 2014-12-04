@@ -149,13 +149,13 @@ public class Card
          rankName = "Back";
       else if (rank >= 2 && rank <= 10)
       {
-         str = "Your card is the " + rank + " of " + suitName;
+         str = rank + " of " + suitName;
          return str;
       }
       else
          rankName = "Unknown rank";
       
-      str2 = "Your card is the " + rankName + " of " + suitName;
+      str2 = rankName + " of " + suitName;
       return str2;
    
    }

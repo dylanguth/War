@@ -5,9 +5,9 @@ public class Frame extends JFrame
 {
    private WarGame game;
    private String winner;
-   private int countNum1 = 26, countNum2 = 26, warPile = 0;
+   private int countNum1 = 26, countNum2 = 26, warPile = 0, middle = 0;
    private JButton next, war, newGame;
-   private JLabel downPic1, downPic2, upPic1, upPic2, result, player1, player2, count1, count2, round;
+   private JLabel downPic1, downPic2, upPic1, upPic2, result, player1, player2, count1, count2, round, middleCount;
    private JPanel panel = new JPanel(new BorderLayout()),
             p = new JPanel(new BorderLayout()),
             p1 = new JPanel(new BorderLayout()),
@@ -103,6 +103,7 @@ public class Frame extends JFrame
       player2 = new JLabel("Player 2");
       count1 = new JLabel("count: " + countNum1);
       count2 = new JLabel("count: " + countNum2);
+      middleCount = new JLabel("middle count: " + middle, SwingConstants.CENTER);
       round =  new JLabel("round " + roundNum, SwingConstants.CENTER);
       
       result.setFont(result.getFont().deriveFont(50.0f));
@@ -120,6 +121,7 @@ public class Frame extends JFrame
       p1.add(downPic2,BorderLayout.EAST);
       pUp.add(upPic1,BorderLayout.WEST);
       pUp.add(upPic2,BorderLayout.EAST);
+      pUp.add(middleCount,BorderLayout.CENTER);
       p2.add(result,BorderLayout.CENTER);
       pTop.add(player1,BorderLayout.WEST);
       pTop.add(player2,BorderLayout.EAST);
@@ -147,6 +149,7 @@ public class Frame extends JFrame
    {
       public void actionPerformed(ActionEvent e)
       {
+         System.out.println("next");
          roundNum++;
          round.setText("round: " + roundNum);
          winner = game.battle();
@@ -161,8 +164,10 @@ public class Frame extends JFrame
 //             countNum1--;
 //             countNum2--;
 //             warPile+=2;
-            countNum1 = game.getUpPile1().getCount();
-            countNum2 = game.getUpPile2().getCount();
+            countNum1 = game.getUpPile1().getCount() + game.getDownPile1().getCount();
+            countNum2 = game.getUpPile2().getCount() + game.getDownPile2().getCount();
+            middle = game.getMiddlePile().getCount();
+            middleCount.setText("Middle Count: " + middle);
             count1.setText("Count: " + countNum1);
             count2.setText("Count: " + countNum2);
             result.setText("WAR!");
@@ -175,11 +180,15 @@ public class Frame extends JFrame
 //             countNum1++;
 //             countNum2--;
 //             warPile = 0;
-            countNum1 = game.getUpPile1().getCount();
-            countNum2 = game.getUpPile2().getCount();
+            countNum1 = game.getUpPile1().getCount() + game.getDownPile1().getCount();
+            countNum2 = game.getUpPile2().getCount() + game.getDownPile2().getCount();
+            middle = game.getMiddlePile().getCount();
+            middleCount.setText("Middle Count: " + middle);
             count1.setText("Count: " + countNum1);
             count2.setText("Count: " + countNum2);
             result.setText("Player 1 wins the round");
+            next.setVisible(true);
+            war.setVisible(false);
          }   
          else if (winner == "Player 2")
          {
@@ -187,16 +196,24 @@ public class Frame extends JFrame
 //             countNum1--;
 //             countNum2++;
 //             warPile = 0;
-            countNum1 = game.getUpPile1().getCount();
-            countNum2 = game.getUpPile2().getCount();
+            countNum1 = game.getUpPile1().getCount() + game.getDownPile1().getCount();
+            countNum2 = game.getUpPile2().getCount() + game.getDownPile2().getCount();
+            middle = game.getMiddlePile().getCount();
+            middleCount.setText("Middle Count: " + middle);
             count1.setText("Count: " + countNum1);
             count2.setText("Count: " + countNum2);
             result.setText("Player 2 wins the round");
+            next.setVisible(true);
+            war.setVisible(false);
             
          }
          else if (winner == "Player 1 wins!")
          {
             //player 1 wins game
+            countNum1 = game.getUpPile1().getCount() + game.getDownPile1().getCount();
+            countNum2 = game.getUpPile2().getCount() + game.getDownPile2().getCount();
+            middle = game.getMiddlePile().getCount();
+            middleCount.setText("Middle Count: " + middle);
             count1.setText("Count: " + countNum1);
             count2.setText("Count: " + countNum2);
             result.setText(winner);
@@ -206,6 +223,10 @@ public class Frame extends JFrame
          else if (winner == "Player 2 wins!")
          {
             //player 2 wins game
+            countNum1 = game.getUpPile1().getCount() + game.getDownPile1().getCount();
+            countNum2 = game.getUpPile2().getCount() + game.getDownPile2().getCount();
+            middle = game.getMiddlePile().getCount();
+            middleCount.setText("Middle Count: " + middle);
             count1.setText("Count: " + countNum1);
             count2.setText("Count: " + countNum2);
             result.setText(winner);
@@ -223,8 +244,8 @@ public class Frame extends JFrame
    {
       public void actionPerformed(ActionEvent e)
       {
-         roundNum++;
          round.setText("round: " + roundNum);
+         System.out.println("WAR");
          
          winner = game.war();
          
@@ -237,11 +258,15 @@ public class Frame extends JFrame
 //             countNum1--;
 //             countNum2--;
 //             warPile+=2;
-            countNum1 = game.getUpPile1().getCount();
-            countNum2 = game.getUpPile2().getCount();
+            countNum1 = game.getUpPile1().getCount() + game.getDownPile1().getCount();
+            countNum2 = game.getUpPile2().getCount() + game.getDownPile2().getCount();
+            middle = game.getMiddlePile().getCount();
+            middleCount.setText("Middle Count: " + middle);
             count1.setText("Count: " + countNum1);
             count2.setText("Count: " + countNum2);
             result.setText("WAR!");
+            next.setVisible(false);
+            war.setVisible(true);
             
          }   
          else if (winner == "Player 1")
@@ -250,8 +275,10 @@ public class Frame extends JFrame
 //             countNum1+=(warPile+1);
 //             countNum2--;
 //             warPile = 0;
-            countNum1 = game.getUpPile1().getCount();
-            countNum2 = game.getUpPile2().getCount();
+            countNum1 = game.getUpPile1().getCount() + game.getDownPile1().getCount();
+            countNum2 = game.getUpPile2().getCount() + game.getDownPile2().getCount();
+            middle = game.getMiddlePile().getCount();
+            middleCount.setText("Middle Count: " + middle);
             count1.setText("Count: " + countNum1);
             count2.setText("Count: " + countNum2);
             result.setText("Player 1 wins the war");
@@ -264,8 +291,10 @@ public class Frame extends JFrame
 //             countNum1--;
 //             countNum2+=(warPile+1);
 //             warPile = 0;
-            countNum1 = game.getUpPile1().getCount();
-            countNum2 = game.getUpPile2().getCount();
+            countNum1 = game.getUpPile1().getCount() + game.getDownPile1().getCount();
+            countNum2 = game.getUpPile2().getCount() + game.getDownPile2().getCount();
+            middle = game.getMiddlePile().getCount();
+            middleCount.setText("Middle Count: " + middle);
             count1.setText("Count: " + countNum1);
             count2.setText("Count: " + countNum2);
             result.setText("Player 2 wins the war");
@@ -275,6 +304,10 @@ public class Frame extends JFrame
          }
          else if (winner == "Player 1 wins!")
          {
+            countNum1 = game.getUpPile1().getCount() + game.getDownPile1().getCount();
+            countNum2 = game.getUpPile2().getCount() + game.getDownPile2().getCount();
+            middle = game.getMiddlePile().getCount();
+            middleCount.setText("Middle Count: " + middle);
             count1.setText("Count: " + countNum1);
             count2.setText("Count: " + countNum2);
             result.setText(winner);
@@ -284,6 +317,10 @@ public class Frame extends JFrame
          }
          else if (winner == "Player 2 wins!")
          {
+            countNum1 = game.getUpPile1().getCount() + game.getDownPile1().getCount();
+            countNum2 = game.getUpPile2().getCount() + game.getDownPile2().getCount();
+            middle = game.getMiddlePile().getCount();
+            middleCount.setText("Middle Count: " + middle);
             count1.setText("Count: " + countNum1);
             count2.setText("Count: " + countNum2);
             result.setText(winner);
@@ -302,7 +339,6 @@ public class Frame extends JFrame
       public void actionPerformed(ActionEvent e)
       {
          Frame frame = new Frame("Game of War");
-         frame.setRoundNum(1);
          frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
          frame.pack();
          frame.setSize(1000,600);

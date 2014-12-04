@@ -17,7 +17,7 @@ public class WarGame extends JFrame
    private JLabel pic;
    private ImageIcon front,back;
    private String winner = "none";
-   private static CardPile upPile1, upPile2, downPile1, downPile2, middle;
+   private static CardPile upPile1, upPile2, downPile1, downPile2, middle = new CardPile();
    private Card curr1 = new Card(0,0), curr2 = new Card(0,0);
    private static Deck deck = new Deck();
    private int j = 0;
@@ -40,41 +40,49 @@ public class WarGame extends JFrame
          //pop at top of each stack and display card
          curr1 = upPile1.remove();
          curr2 = upPile2.remove();
-   
-         middle = new CardPile();
          //determine which card is higher
          
          //start war
          if (curr1.equals(curr2))
          {
             winner = "tie";
-            return winner;
+            System.out.println(curr1 + " is equal to " + curr2);
+            //store curr1 and curr2 in a middle pile
+            middle.add(curr1,curr2);
+            System.out.println(curr1 + " and " + curr2 + " added to middle");
+            //return winner;
          }
          //end war
    
-         if (curr1.greaterThan(curr2))
+         else if (curr1.greaterThan(curr2))
          {
             winner = "Player 1";
+            System.out.println(curr1 + " is larger than " + curr2);
             downPile1.add(curr1, curr2);
+            System.out.println(curr1 + " and " + curr2 + " added to downPile1");
             //add middle pile too
             while (!middle.isEmpty())
             {
                curr1 = middle.remove();
                downPile1.add(curr1);
+               System.out.println(curr1 + " transferred to downPile1");
                
             }
    
          }
    
-         else
+         else if (curr2.greaterThan(curr1))
          {
             winner = "Player 2";
+            System.out.println(curr2 + " is larger than " + curr1);
+            System.out.println(curr1 + " and " + curr2 + " added to downPile2");
             downPile2.add(curr1, curr2);
             //add middle pile too
             while (!middle.isEmpty())
             {
                curr2 = middle.remove();
                downPile2.add(curr2);
+               System.out.println(curr2 + " transferred to downPile2");
                
             }
    
@@ -124,6 +132,7 @@ public class WarGame extends JFrame
          //end find winner
          
       }//end battle
+      System.out.println("Up1: " + getUpPile1().getCount() + "...Down1: " + getDownPile1().getCount() + "...Up2: " + getUpPile2().getCount() + "...Down2: " + getDownPile2().getCount() + "...Middle: " + getMiddlePile().getCount());
       return winner;
 
    
@@ -162,11 +171,26 @@ public class WarGame extends JFrame
    
    }
    
+   public CardPile getDownPile1()
+   {
+      return downPile1;
+   
+   }
+   
+   public CardPile getDownPile2()
+   {
+      return downPile2;
+   
+   }
+   
+   public CardPile getMiddlePile()
+   {
+      return middle;
+   }
+   
    public String war()
    {
-      //store curr1 and curr2 in a middle pile
-      middle.add(curr1,curr2);
-
+      
       //start find winner
       if (upPile1.isEmpty())
       {
@@ -213,16 +237,40 @@ public class WarGame extends JFrame
       //remove a card from each uppile and assign them curr1 and curr2
       curr1 = upPile1.remove(); //can't do this if one of the players has no cards left
       curr2 = upPile2.remove();
-      if (curr1.greaterThan(curr2))
+      if (curr1.equals(curr2))
+      {
+         winner = "tie";
+         System.out.println(curr1 + " is equal to " + curr2);
+      
+      }
+      else if (curr1.greaterThan(curr2))
       {
          winner = "Player 1";
-
+         System.out.println(curr1 + " is larger than " + curr2);
+         downPile1.add(curr1, curr2);
+         System.out.println(curr1 + " and " + curr2 + " added to downPile1");
+         while (!middle.isEmpty())
+         {
+            curr1 = middle.remove();
+            downPile1.add(curr1);
+            System.out.println(curr1 + " transferred to downPile1");
+         }
       }
       else
       {
          winner = "Player 2";
+         System.out.println(curr2 + " is larger than " + curr1);
+         downPile2.add(curr1, curr2);
+         System.out.println(curr1 + " and " + curr2 + " added to downPile2");
+         while (!middle.isEmpty())
+         {
+            curr2 = middle.remove();
+            downPile2.add(curr2);
+            System.out.println(curr2 + " transferred to downPile2");
+         }
 
       }
+      System.out.println("Up1: " + getUpPile1().getCount() + "...Down1: " + getDownPile1().getCount() + "...Up2: " + getUpPile2().getCount() + "...Down2: " + getDownPile2().getCount() + "...Middle: " + getMiddlePile().getCount());
       return winner;
    
    }
