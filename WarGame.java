@@ -12,10 +12,10 @@ import java.awt.event.*;
 
 public class WarGame extends JFrame
 {
-   public Frame frame;
-   private JButton button;
-   private JLabel pic;
-   private ImageIcon front,back;
+//    public Frame frame;
+//    private JButton button;
+//    private JLabel pic;
+//    private ImageIcon front,back;
    private String winner = "none";
    private static CardPile upPile1, upPile2, downPile1, downPile2, middle = new CardPile();
    private Card curr1 = new Card(0,0), curr2 = new Card(0,0);
@@ -270,18 +270,64 @@ public class WarGame extends JFrame
          }
 
       }
+      if (upPile1.isEmpty())
+      {
+         if (downPile1.isEmpty())
+         {
+            winner = "Player 2 wins!";
+            //quit game and announce winner
+            System.out.println(this.getWinner());
+            return winner;
+            //System.exit(0);
+         }
+         
+         while (!downPile1.isEmpty())
+         {
+            curr1 = downPile1.remove();
+            upPile1.add(curr1);
+         
+         }
+         upPile1.shuffle();
+      }
+      
+      if (upPile2.isEmpty())
+      {
+         if (downPile2.isEmpty())
+         {
+            winner = "Player 1 wins!";
+            //quit game and announce winner
+            
+            System.out.println(this.getWinner());
+            return winner;
+            //System.exit(0);
+         }
+         
+         while (!downPile2.isEmpty())
+         {
+            curr2 = downPile2.remove();
+            upPile2.add(curr2);
+         
+         }
+         upPile2.shuffle();
+      }
+
+      
       System.out.println("Up1: " + getUpPile1().getCount() + "...Down1: " + getDownPile1().getCount() + "...Up2: " + getUpPile2().getCount() + "...Down2: " + getDownPile2().getCount() + "...Middle: " + getMiddlePile().getCount());
       return winner;
+      
+      
    
    }
 
    public void deal()
    {
       //while theres still cards left, deal a card to each spot in the arraylist 
+      deck = new Deck();
       upPile1 = new CardPile(); //implements deck constructor before cardPile constructor. ct in deck is always 52, but count can change in pile
       upPile2 = new CardPile();
       downPile1 = new CardPile();
       downPile2 = new CardPile();
+      middle = new CardPile();
       
       //shuffle deck
       deck.shuffle();
@@ -306,6 +352,16 @@ public class WarGame extends JFrame
 //       frame.setVisible(true);
       //start game >>>>>Deal in constructor (warGame)
       WarGame game = new WarGame();
+//       while(!upPile1.isEmpty()||!downPile1.isEmpty()&&!upPile2.isEmpty()||downPile2.isEmpty())
+//       {
+//          if (curr1.equals(curr2))
+//             game.war();
+//          else 
+//             game.battle();
+//       
+//       }
+      
+      
       //end game
              
    }

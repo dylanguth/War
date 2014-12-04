@@ -338,6 +338,7 @@ public class Frame extends JFrame
    {
       public void actionPerformed(ActionEvent e)
       {
+         //fresh deck
          Frame frame = new Frame("Game of War");
          frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
          frame.pack();
